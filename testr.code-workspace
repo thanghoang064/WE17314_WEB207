@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "../testr"
+		},
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "WE17314_WEB207"
+	}
+}

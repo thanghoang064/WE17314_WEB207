@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- nhúng thư viện angular js vào -->
+    <script src="libs/angular.min.js"></script>
+</head>
+<body ng-app="myapp">
+    <!-- <div ng-controller="demoController">
+        <h1> {{ welcome }}</h1>
+    </div> -->
+    <div ng-controller="infoController">
+        <table border="1">
+            <tr>
+                <td>Tên</td>
+                <td>Tuổi</td>
+                <td>SDT</td>
+            </tr>
+            <tr>
+                <td>{{ info.ten }}</td>
+                <td>{{ info.tuoi }}</td>
+                <td>{{ info.sdt }}</td>
+            </tr>
+        </table>
+        <h1>{{ welcome }}</h1>
+        <h1 ng-bind="welcome"></h1>
+        <input ng-model="test"/>
+        <select ng-model="doibong">
+            <option value="1">Mu </option>
+            <option value="2">Mc </option>
+            <option value="3">Arsenal </option>
+        </select>
+        Nam
+        <input ng-model="gioitinh" type="radio" value="1" />
+        Nữ
+        <input ng-model="gioitinh" type="radio" value="2" />
+        Bê đê
+        <input ng-model="gioitinh" type="radio" value="3" />
+        <h2> {{ thongbao }}</h2>
+        <button ng-click="sayHello()">Hihi</button>
+        <h1 ng-mousemove="myMouse()">Đưa chuột vào</h1>
+        {{ count }}
+    </div>
+</body>
+<script src="app.js"></script>
+<script>
+    // //viết chuẩn
+    // function myFunc($scope) { // luôn luôn có tham số $scope
+    //     $scope.welcome = "Hello world"; // đằng sau $scope. là biến mình khởi tạo
+    //     // để render ra view
+    // }
+    // //khai báo angular js cùng với vùng mình sử dụng
+    // var app = angular.module("myapp",[]);
+    // // map hàm myFunc với vùng demoController để 
+    // //render dữ liệu ra 
+    // app.controller("demoController",myFunc);
+
+    // //viết tắt 
+    // app.controller("infoController",function($scope){
+    //     // $scope.ten = "Nguyễn Văn a";
+    //     // $scope.tuoi = 18;
+    //     // $scope.sdt = "09329239";
+    //     $scope.info = [{
+    //         ten:"Nguyen van a",
+    //         tuoi:18,
+    //         sdt:"09393939"
+    //     },
+    //     {
+    //         ten:"Nguyen van b",
+    //         tuoi:19,
+    //         sdt:"0292929"
+    //     }
+    // ]
+    // });
+</script>
+</html>
