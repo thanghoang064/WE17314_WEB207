@@ -8,6 +8,7 @@
     <script src="libs/angular.min.js"></script>
     <script src="libs/angular-route.min.js"></script>
     <script src="controllers/TrangChuController.js"></script>
+    <script src="controllers/GioiThieuController.js"></script>
 </head>
 <body>
     <div ng-app="app-route">
@@ -15,7 +16,7 @@
         <nav>
             <ul>
                 <li><a href="#!/trang-chu">Trang chủ</a></li>
-                <li><a href="">Giới thiệu</a></li>
+                <li><a href="#!/gioi-thieu/hihi">Giới thiệu</a></li>
             </ul>
         </nav>
         <main>
@@ -33,9 +34,9 @@
         $routeProvider.when('/trang-chu',{ // định nghĩa tên route là trang-chu
             templateUrl : 'views/trang-chu.html', // đường dẫn đến view
             controller: TrangChuController
-        }).when('/trang-chu',{ // định nghĩa tên route là trang-chu
-            templateUrl : 'views/trang-chu.html', // đường dẫn đến view
-            controller: TrangChuController
+        }).when('/gioi-thieu/:name1',{ // định nghĩa tên route là trang-chu
+            templateUrl : 'views/gioi-thieu.html', // đường dẫn đến view
+            controller: GioiThieuController
         })
     })
 </script>
