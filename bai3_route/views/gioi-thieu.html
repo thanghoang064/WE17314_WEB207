@@ -20,4 +20,16 @@
         </tr>
     </table>
     <button  ng-click="onSubmitForm()">Lưu</button>
+    <table border="1">
+        <tr>
+            <td>ID</td>
+            <td>Tên</td>
+            <td>Tuổi</td>
+        </tr>
+        <tr ng-repeat="ds in danhsach">
+            <td>{{ ds.id }}</td>
+            <td>{{ ds.ten }}</td>
+            <td>{{ ds.tuoi }}</td>
+        </tr>
+    </table>
 </div>
