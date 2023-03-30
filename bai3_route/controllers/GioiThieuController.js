@@ -15,6 +15,8 @@ window.GioiThieuController = function($scope,$routeParams) {
             ten:"",
             tuoi:""
         }
+
+        $scope.editId = 0;
     }
     $scope.onSubmitForm = function() {
         //valide nếu như tên bỏ trống 
@@ -31,6 +33,19 @@ window.GioiThieuController = function($scope,$routeParams) {
         }
         //không có lỗi xử lý thêm
         if(!flag) {
+            //xử lý sửa
+            let editId = $scope.editId;
+            //kiểm tra nếu tồn tại editId là sửa 
+            if(editId) {
+                for(let i = 0;i < $scope.danhsach.length;i++) {
+                    if($scope.danhsach[i].id == editId) {
+                        $scope.danhsach[i].ten = $scope.inputValue.ten;
+                        $scope.danhsach[i].tuoi = $scope.inputValue.tuoi;
+                    }
+                }
+                $scope.onClose();
+                return;
+            }
             let ds = $scope.danhsach;
             //fake id tăng tự động 
             let newId = ds.length > 0 ? ds[ds.length - 1].id + 1 : 1;
@@ -41,6 +56,35 @@ window.GioiThieuController = function($scope,$routeParams) {
             }
             $scope.danhsach.push(newItem);
             $scope.onClose();
+        }
+    }
+    $scope.onEdit = function(editId) {
+        $scope.editId = editId;
+        //tạo ra 1 đối tượng editItem 
+        let editItem = {
+            ten:"",
+            tuoi:""
+        }
+        for(let i = 0; i < $scope.danhsach.length;i++) {
+            if($scope.danhsach[i].id == editId) {
+                editItem.ten = $scope.danhsach[i].ten;
+                editItem.tuoi = $scope.danhsach[i].tuoi;
+            }
+        }
+        // hiển thị thông tin cần sửa lên form 
+        $scope.inputValue = {
+            ten: editItem.ten,
+            tuoi: editItem.tuoi
+        }
+
+    }
+    $scope.onDelete = function (deleteId) {
+        let confirm = window.confirm("Bạn xóa muốn xóa không ?");
+        if(confirm) {
+            //xóa 
+            $scope.danhsach  = $scope.danhsach.filter(function(item){
+                return item.id !== deleteId;
+            });
         }
     }
 
