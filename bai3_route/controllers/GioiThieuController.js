@@ -7,7 +7,7 @@ window.GioiThieuController = function($scope,$routeParams,$http) {
         ten:false, // chưa có lỗi gì mặc định là false
         tuoi:false
     };
-    let apiURl = "http://localhost:3000/test"; // điền link api mà mình muốn gọi
+    let apiURl = "http://localhost:3000/posts"; // điền link api mà mình muốn gọi
     $scope.getData = function() {
         $http.get(apiURl).then(function(reponse) {
             // khi gọi API thành công cục reponse sẽ  nhận dữ liệu 
@@ -49,12 +49,27 @@ window.GioiThieuController = function($scope,$routeParams,$http) {
             let editId = $scope.editId;
             //kiểm tra nếu tồn tại editId là sửa 
             if(editId) {
-                for(let i = 0;i < $scope.danhsach.length;i++) {
-                    if($scope.danhsach[i].id == editId) {
-                        $scope.danhsach[i].ten = $scope.inputValue.ten;
-                        $scope.danhsach[i].tuoi = $scope.inputValue.tuoi;
-                    }
+                // for(let i = 0;i < $scope.danhsach.length;i++) {
+                //     if($scope.danhsach[i].id == editId) {
+                //         $scope.danhsach[i].ten = $scope.inputValue.ten;
+                //         $scope.danhsach[i].tuoi = $scope.inputValue.tuoi;
+                //     }
+                // }
+                // tạo đối tượng updateItem
+                let updateItem  = {
+                    ten :$scope.inputValue.ten,
+                    tuoi:$scope.inputValue.tuoi
                 }
+                $http.put(
+                    `${apiURl}/${editId}`, // đường link cập nhập theo id
+                    updateItem // dữ liệu được update 
+                ).then(
+                    function(response) {
+                        if(response.status == 200) {
+                            $scope.getData(); // gọi lại hàm getData để update lại
+                        }
+                    }
+                )
                 $scope.onClose();
                 return;
             }
@@ -83,22 +98,35 @@ window.GioiThieuController = function($scope,$routeParams,$http) {
     }
     $scope.onEdit = function(editId) {
         $scope.editId = editId;
-        //tạo ra 1 đối tượng editItem 
-        let editItem = {
-            ten:"",
-            tuoi:""
-        }
-        for(let i = 0; i < $scope.danhsach.length;i++) {
-            if($scope.danhsach[i].id == editId) {
-                editItem.ten = $scope.danhsach[i].ten;
-                editItem.tuoi = $scope.danhsach[i].tuoi;
+        //gọi API để lấy dữ liệu theo editID và bắn lên form 
+        $http.get(`${apiURl}/${editId}`).then(
+            function(response) {
+                // bắt trạng thái thành công 
+                if(response.status == 200) {
+                    $scope.inputValue = {
+                            ten: response.data.ten,
+                            tuoi: response.data.tuoi
+                        }
+                }
+                // console.log(response);
             }
-        }
+        )
+        //tạo ra 1 đối tượng editItem 
+        // let editItem = {
+        //     ten:"",
+        //     tuoi:""
+        // }
+        // for(let i = 0; i < $scope.danhsach.length;i++) {
+        //     if($scope.danhsach[i].id == editId) {
+        //         editItem.ten = $scope.danhsach[i].ten;
+        //         editItem.tuoi = $scope.danhsach[i].tuoi;
+        //     }
+        // }
         // hiển thị thông tin cần sửa lên form 
-        $scope.inputValue = {
-            ten: editItem.ten,
-            tuoi: editItem.tuoi
-        }
+        // $scope.inputValue = {
+        //     ten: editItem.ten,
+        //     tuoi: editItem.tuoi
+        // }
 
     }
     $scope.onDelete = function (deleteId) {
