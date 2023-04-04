@@ -1,15 +1,27 @@
-window.GioiThieuController = function($scope,$routeParams) {
+window.GioiThieuController = function($scope,$routeParams,$http) {
     // routeParams se ra 1 doi tuong chua param tren url
     // console.log($routeParams.name1);
     // tạo 1 đối tượng kiểm tra dữ liệu mặc định là false 
+    // tham số $http là giao thức để gọi api 
     $scope.kiemTraDuLieu = {
         ten:false, // chưa có lỗi gì mặc định là false
         tuoi:false
     };
-    $scope.danhsach = [
-        {id:1,ten:"Nguyễn Văn A",tuoi:19},
-        {id:2,ten:"Nguyễn Văn B",tuoi:20}
-    ]
+    let apiURl = "http://localhost:3000/test"; // điền link api mà mình muốn gọi
+    $scope.getData = function() {
+        $http.get(apiURl).then(function(reponse) {
+            // khi gọi API thành công cục reponse sẽ  nhận dữ liệu 
+            // console.log(reponse);
+            if(reponse.status == 200) { // nếu trạng thái  == 200 // thành công
+                    $scope.danhsach = reponse.data;
+            }
+        })
+    }
+    $scope.getData();
+    // $scope.danhsach = [
+    //     {id:1,ten:"Nguyễn Văn A",tuoi:19},
+    //     {id:2,ten:"Nguyễn Văn B",tuoi:20}
+    // ]
     $scope.onClose = function() {
         $scope.inputValue = {
             ten:"",
@@ -46,15 +58,26 @@ window.GioiThieuController = function($scope,$routeParams) {
                 $scope.onClose();
                 return;
             }
-            let ds = $scope.danhsach;
+            // let ds = $scope.danhsach;
             //fake id tăng tự động 
-            let newId = ds.length > 0 ? ds[ds.length - 1].id + 1 : 1;
+            // let newId = ds.length > 0 ? ds[ds.length - 1].id + 1 : 1;
             let newItem = {
-                id:newId,
+                // id:newId,
                 ten: $scope.inputValue.ten,
                 tuoi: $scope.inputValue.tuoi
             }
-            $scope.danhsach.push(newItem);
+            $http.post(
+                apiURl, //đường dẫn API 
+                newItem // dữ liệu thêm 
+            ).then(
+                function (reponse) {
+                    console.log(reponse);
+                    if(reponse.status == 201) {
+                        $scope.getData();
+                    }
+                }
+            )
+            // $scope.danhsach.push(newItem);
             $scope.onClose();
         }
     }
