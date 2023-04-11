@@ -1,8 +1,10 @@
-window.GioiThieuController = function($scope,$routeParams,$http) {
+window.GioiThieuController = function($scope,$routeParams,$http,$location) {
     // routeParams se ra 1 doi tuong chua param tren url
     // console.log($routeParams.name1);
     // tạo 1 đối tượng kiểm tra dữ liệu mặc định là false 
     // tham số $http là giao thức để gọi api 
+    // $location hỗ trợ chuyển trang cú pháp sử dụng 
+    //$location.path("Tên route muốn nhảy");
     $scope.kiemTraDuLieu = {
         ten:false, // chưa có lỗi gì mặc định là false
         tuoi:false
@@ -98,6 +100,8 @@ window.GioiThieuController = function($scope,$routeParams,$http) {
     }
     $scope.onEdit = function(editId) {
         $scope.editId = editId;
+        //nhẩy sang route sửa
+        $location.path(`gioithieu/${editId}/edit`);
         //gọi API để lấy dữ liệu theo editID và bắn lên form 
         $http.get(`${apiURl}/${editId}`).then(
             function(response) {
